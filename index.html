@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Berry PvZ's PvZ Mini-program Archival Page!</title>
+
+<style>
+/* Global */
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background: linear-gradient(to bottom, #0073e6, #004080);
+    color: white;
+    margin: 0;
+    padding: 0;
+}
+
+/* Header (DBGG Style) */
+header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(to right, #004080, #001f40);
+    padding: 15px 0;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+header h1 {
+    margin: 0 10px;
+    font-size: 2.5em;
+    color: #ffcc00;
+    white-space: nowrap;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+/* Main Container */
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 30px auto;
+    max-width: 1200px;
+}
+
+/* Card (DBGG Style) */
+.card {
+    background: linear-gradient(to bottom, #00284d, #001730);
+    border-radius: 10px;
+    margin: 15px;
+    padding: 20px;
+    width: 250px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+}
+.card h3 {
+    margin: 15px 0 10px 0;
+    font-size: 1.5em;
+    color: #ffcc00;
+}
+.card p {
+    color: #cccccc;
+    margin: 10px 0;
+}
+
+/* DBGG-style Play Button */
+.card button {
+    background: linear-gradient(to bottom, #28a745, #19692c);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    transition: all 0.3s ease;
+}
+.card button:hover {
+    background: linear-gradient(to bottom, #34d058, #22863a);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.4);
+}
+
+/* FULLSCREEN WINDOW */
+#fullscreen {
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.85);
+    z-index: 9999;
+}
+
+/* Now Playing Bar (Windows-style) */
+#now-playing-bar {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(to bottom, #d7e6ff, #a8c4f0);
+    border: 2px solid #4a70c0;
+    border-radius: 6px;
+    padding: 6px 12px;
+    font-size: 1.1em;
+    color: #00245c;
+    font-weight: bold;
+    z-index: 10001;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.4);
+    font-family: "Segoe UI", sans-serif;
+}
+
+/* Blue Fullscreen Button */
+.fullscreen-left-btn {
+    position: absolute;
+    left: 20px;
+    top: 20px;
+    background: linear-gradient(to bottom, #4da3ff, #005cd1);
+    border: none;
+    padding: 10px 16px;
+    border-radius: 6px;
+    color: white;
+    font-weight: bold;
+    font-size: 1em;
+    cursor: pointer;
+    z-index: 10001;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+.fullscreen-left-btn:hover {
+    background: linear-gradient(to bottom, #73b8ff, #0068ee);
+}
+
+/* Game Iframe */
+#game-frame {
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 80%; height: 80%;
+    transform: translate(-50%, -50%);
+    border: none;
+}
+
+/* Close Button */
+.close-btn {
+    position: absolute;
+    top: 20px; right: 20px;
+    width: 40px; height: 40px;
+    background: red;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    font-size: 1.5em;
+    cursor: pointer;
+    line-height: 40px;
+    z-index: 10001;
+}
+.close-btn:hover {
+    background: darkred;
+}
+
+/* Contributors Panel */
+#contributorsPanel {
+    position: fixed;
+    top: 0;
+    right: -400px;
+    width: 350px;
+    height: 100vh;
+    background: linear-gradient(to bottom, #00284d, #001730);
+    border-left: 2px solid #ffcc00;
+    box-shadow: -5px 0 15px rgba(0,0,0,0.4);
+    padding: 0; /* Remove padding from panel */
+    z-index: 99999;
+    transition: right 0.4s ease;
+    display: flex;
+    flex-direction: column;
+}
+#contributorsPanel.active {
+    right: 0;
+}
+#contributorsPanel h2 {
+    color: #ffcc00;
+    font-size: 1.8em;
+    padding: 20px 20px 15px 20px;
+    margin: 0;
+    border-bottom: 1px solid rgba(255, 204, 0, 0.3);
+    flex-shrink: 0; /* Prevent header from shrinking */
+}
+
+/* Scrollable contributors list */
+.contributors-list {
+    flex: 1; /* Take remaining space */
+    overflow-y: auto;
+    padding: 15px 20px;
+    max-height: calc(100vh - 80px); /* Account for header height */
+}
+
+.contributor {
+    background: rgba(255,255,255,0.1);
+    margin: 10px 0;
+    padding: 12px;
+    border-radius: 8px;
+    color: #ffffff;
+    font-weight: bold;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.contributor.highlight {
+    background: rgba(255, 204, 0, 0.2);
+    border-left: 4px solid #ffcc00;
+}
+
+/* Custom scrollbar for contributors list */
+.contributors-list::-webkit-scrollbar {
+    width: 8px;
+}
+
+.contributors-list::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+}
+
+.contributors-list::-webkit-scrollbar-thumb {
+    background: rgba(255, 204, 0, 0.5);
+    border-radius: 4px;
+}
+
+.contributors-list::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 204, 0, 0.7);
+}
+
+/* Contributors Button */
+.contributors-btn {
+    margin-top: 10px;
+    background: linear-gradient(to bottom, #ffc400, #c69a00);
+    border: none;
+    padding: 10px 22px;
+    border-radius: 6px;
+    color: #1a1a1a;
+    cursor: pointer;
+    font-weight: bold;
+}
+.contributors-btn:hover {
+    background: linear-gradient(to bottom, #ffdb4d, #d4aa00);
+}
+
+/* Dim Background */
+.overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.55);
+    display: none;
+    z-index: 9000;
+}
+.overlay.active {
+    display: block;
+}
+
+/* Footer */
+.footer-links {
+    margin-top: 40px;
+}
+.footer-link {
+    display: inline-block;
+    margin: 10px 20px;
+    padding: 10px 18px;
+    background: rgba(0,0,0,0.25);
+    border-radius: 6px;
+    color: #ffcc00;
+    font-weight: bold;
+    text-decoration: none;
+}
+.footer-link:hover {
+    background: rgba(0,0,0,0.4);
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>Berry PVZ's PvZ Mini-program Archival Page!</h1>
+</header>
+
+<button class="contributors-btn" id="contributorsBtn">View Contributors</button>
+
+<div class="container">
+
+    <!-- CARDS (DBGG Style) -->
+       <div class="card">
+        <h3>Tower of Overwatch</h3>
+        <p>Kinda a rebrand.</p>
+        <button onclick="openGame('./too/index.html')">Play</button>
+    </div>
+
+    <div class="card">
+        <h3>Plant Eliminate Zombie</h3>
+        <p>PvZ OE rebrand 1.</p>
+        <button onclick="openGame('./pez/index.html')">Play</button>
+    </div>
+
+    <div class="card">
+        <h3>Plant Hybrid</h3>
+        <p>Hybrid Edition content.</p>
+        <button onclick="openGame('./ph/index.html')">Play</button>
+    </div>
+
+    <div class="card">
+        <h3>PvZOE</h3>
+        <p>The original OE.</p>
+        <button onclick="openGame('./oe/index.html')">Play</button>
+    </div>
+
+    <div class="card">
+        <h3>WEIRD amalgated OE</h3>
+        <p>Weirdest OE variation.</p>
+        <button onclick="openGame('./weirdoe/index.html')">Play</button>
+    </div>
+
+    <div class="card">
+        <h3>BETA OE</h3>
+        <p>Beta version of OE.</p>
+        <button onclick="openGame('./betaoe/index.html')">Play</button>
+    </div>
+  </div>
+
+<!-- FULLSCREEN GAME WINDOW -->
+<div id="fullscreen">
+
+    <div id="now-playing-bar">Now Playing: Nothing</div>
+
+    <button class="fullscreen-left-btn" onclick="toggleFullscreen()">Fullscreen</button>
+
+    <button class="close-btn" onclick="closeGame()">X</button>
+
+    <iframe id="game-frame"></iframe>
+
+</div>
+
+<!-- CONTRIBUTORS PANEL -->
+<div id="contributorsPanel">
+    <h2>Contributors</h2>
+    
+    <div class="contributors-list">
+   <div class="contributor">Vi (cracked the lock on multiple locked versions)</div>
+<div class="contributor">Hey1mJayd (plans to make a video on this)</div>
+<div class="contributor">Redtarp (archived some prototypes)</div>
+<div class="contributor">Tablet pro (the main fuzzer of URLs and archiver)</div>
+<div class="contributor">Berry PVZ (the one who made this site and found out animation rendering and viewing)</div>
+<div class="contributor">Nickolas (the 1st fuzzer and tool creator)</div>
+<div class="contributor">v20241 (archived some, really just here cuz he's a good friend)</div>
+<div class="contributor">A Random Chinese (Helped give insight into many things and helped figure out the music used in pez.)</div>
+<div class="contributor">(Un)funny guy (small tool maker, also archived 1st game version)</div>
+<div class="contributor">Hailey821 (sent PvZ2 Evolve link)</div>
+<div class="contributor">Goldnchld/Nick V (helped reach out for help at flashpoint archive, requested to be put last.)</div>
+    </div>
+</div>
+
+<div class="overlay" id="overlay"></div>
+
+<footer>
+    <div class="footer-links">
+        <a href="https://docs.google.com/document/d/1CASrfSApstFxOTG5DsNK49VwQjpr5XYBAuFrdROgaMk/edit?usp=sharing" 
+           target="_blank" 
+           class="footer-link">
+            HOW TO VIEW OE ANIMS DOC
+        </a>
+        <a href="https://docs.google.com/spreadsheets/d/1HrB92k520Ht0BGi6Nw98-734iOe0EY9aj1XPS8kdiUg/edit?usp=sharing" 
+           target="_blank" 
+           class="footer-link">
+            OE ARCHIVAL DOC
+        </a>
+    </div>
+</footer>
+
+<script>
+function openGame(url) {
+    const fs = document.getElementById("fullscreen");
+    const frame = document.getElementById("game-frame");
+
+    // Extract readable game name from URL
+    let name = url.replace("./", "").replace("/", "").toUpperCase();
+    document.getElementById("now-playing-bar").textContent = "Now Playing: " + name;
+
+    frame.src = url;
+    fs.style.display = "block";
+}
+
+function toggleFullscreen() {
+    const frame = document.getElementById("game-frame");
+    if (!document.fullscreenElement) {
+        frame.requestFullscreen().catch(err => console.log(err));
+    } else {
+        document.exitFullscreen();
+    }
+}
+
+function closeGame() {
+    const fs = document.getElementById("fullscreen");
+    const frame = document.getElementById("game-frame");
+    frame.src = "";
+    fs.style.display = "none";
+}
+
+// Contributors Panel Handling
+document.getElementById("contributorsBtn").onclick = () => {
+    document.getElementById("contributorsPanel").classList.add("active");
+    document.getElementById("overlay").classList.add("active");
+};
+
+document.getElementById("overlay").onclick = () => {
+    document.getElementById("contributorsPanel").classList.remove("active");
+    document.getElementById("overlay").classList.remove("active");
+};
+</script>
+
+</body>
+</html>
