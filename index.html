@@ -10,7 +10,7 @@
 body {
     font-family: Arial, sans-serif;
     text-align: center;
-    background: linear-gradient(to bottom, #0073e6, #004080);
+    background: linear-gradient(180deg, #0b6fdc 0%, #004080 55%, #001428 100%);
     color: white;
     margin: 0;
     padding: 0;
@@ -30,6 +30,14 @@ header h1 {
     color: #ffcc00;
     text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
     margin: 0;
+}
+
+/* Section titles */
+.section-title {
+    font-size: 2em;
+    margin: 40px 0 10px;
+    color: #ffcc00;
+    text-shadow: 2px 2px 4px rgba(0,0,0,.6);
 }
 
 /* Contributors Button */
@@ -200,9 +208,6 @@ header h1 {
     height: 100%;
     border: none;
     background: #001730;
-    color: white;
-    font-family: Consolas, monospace;
-    font-size: 0.95em;
 }
 
 /* Overlay */
@@ -245,15 +250,23 @@ header h1 {
 
 <button class="contributors-btn" id="contributorsBtn">View Contributors</button>
 
+<div class="section-title">GAMES</div>
 <div class="container">
-    <div class="card"><h3>Tower of Overwatch</h3><p>Kinda a rebrand.</p><button onclick="openGame('too','./too/index.html')">Play</button></div>
-    <div class="card"><h3>Plant Eliminate Zombie</h3><p>PvZ OE rebrand 1.</p><button onclick="openGame('pez','./pez/index.html')">Play</button></div>
-    <div class="card"><h3>Plant Hybrid</h3><p>Hybrid Edition content.</p><button onclick="openGame('ph','./ph/index.html')">Play</button></div>
-    <div class="card"><h3>PvZOE</h3><p>The original OE.</p><button onclick="openGame('oe','./oe/index.html')">Play</button></div>
-    <div class="card"><h3>WEIRD amalgated OE</h3><p>Weirdest OE variation.</p><button onclick="openGame('weirdoe','./weirdoe/index.html')">Play</button></div>
-    <div class="card"><h3>BETA OE</h3><p>Beta version of OE.</p><button onclick="openGame('betaoe','./betaoe/index.html')">Play</button></div>
-    <div class="card"><h3>ALPHA OE</h3><p>Alpha version of OE.</p><button onclick="openGame('alphaoe','./alphaoe/index.html')">Play</button></div>
-    <div class="card"><h3>EARLY OE</h3><p>first version of OE.</p><button onclick="openGame('earlyoe','./earlyoe/index.html')">Play</button></div>
+    <div class="card"><h3>Tower of Overwatch</h3><p>Kinda a rebrand??</p><button onclick="openGame('too','./too/index.html')">Play</button></div>
+    <div class="card"><h3>Plant Eliminate Zombie</h3><p>PvZ OE rebrand 1...</p><button onclick="openGame('pez','./pez/index.html')">Play</button></div>
+    <div class="card"><h3>Plant Hybrid</h3><p>Hybrid Edition content!</p><button onclick="openGame('ph','./ph/index.html')">Play</button></div>
+    <div class="card"><h3>PvZOE</h3><p>The original OE!!!!!!</p><button onclick="openGame('oe','./oe/index.html')">Play</button></div>
+    <div class="card"><h3>WEIRD amalgated OE</h3><p>Weirdest OE variation...</p><button onclick="openGame('weirdoe','./weirdoe/index.html')">Play</button></div>
+    <div class="card"><h3>BETA OE</h3><p>Beta version of OE!</p><button onclick="openGame('betaoe','./betaoe/index.html')">Play</button></div>
+    <div class="card"><h3>ALPHA OE</h3><p>Alpha version of OE!</p><button onclick="openGame('alphaoe','./alphaoe/index.html')">Play</button></div>
+    <div class="card"><h3>EARLY OE</h3><p>First version of OE!</p><button onclick="openGame('earlyoe','./earlyoe/index.html')">Play</button></div>
+    <div class="card"><h3>v37 OE</h3><p>Early production build!</p><button onclick="openGame('v37','./v37/index.html')">Play</button></div>
+</div>
+
+<div class="section-title">MODS</div>
+<div class="container">
+        <div class="card"><h3>CALM CHUCK OE</h3><p>first public oe mod!</p><button onclick="openGame('chuckoe','./chuckoe/index.html')">Play</button></div>
+    </div>
 </div>
 
 <div id="fullscreen">
@@ -296,7 +309,9 @@ const GAME_ZIPS = {
     weirdoe: "./weirdoe.zip",
     betaoe: "./betaoe.zip",
     alphaoe: "./alphaoe.zip",
-    earlyoe: "./earlyoe.zip"
+    earlyoe: "./earlyoe.zip",
+    v37: "./v37.zip",
+    chuckoe: "./chuckoe.zip"
 };
 
 function openGame(key, url) {
@@ -308,7 +323,7 @@ function openGame(key, url) {
 
 function toggleFullscreen() {
     if (!document.fullscreenElement) {
-        gameFrame.requestFullscreen().catch(() => {});
+        gameFrame.requestFullscreen().catch(()=>{});
     } else {
         document.exitFullscreen();
     }
