@@ -257,15 +257,22 @@ header h1 {
     <div class="card"><h3>Plant Hybrid</h3><p>Hybrid Edition content!</p><button onclick="openGame('ph','./ph/index.html')">Play</button></div>
     <div class="card"><h3>PvZOE</h3><p>The original OE!!!!!!</p><button onclick="openGame('oe','./oe/index.html')">Play</button></div>
     <div class="card"><h3>WEIRD amalgated OE</h3><p>Weirdest OE variation...</p><button onclick="openGame('weirdoe','./weirdoe/index.html')">Play</button></div>
-    <div class="card"><h3>BETA OE</h3><p>Beta version of OE!</p><button onclick="openGame('betaoe','./betaoe/index.html')">Play</button></div>
-    <div class="card"><h3>ALPHA OE</h3><p>Alpha version of OE!</p><button onclick="openGame('alphaoe','./alphaoe/index.html')">Play</button></div>
-    <div class="card"><h3>EARLY OE</h3><p>First version of OE!</p><button onclick="openGame('earlyoe','./earlyoe/index.html')">Play</button></div>
-    <div class="card"><h3>v37 OE</h3><p>Early production build!</p><button onclick="openGame('v37','./v37/index.html')">Play</button></div>
+    <div class="card"><h3>PvZ2 Evolve</h3><p>Not to be confused with PVZ3 EVOLVED, but is a crappy game, and is the base of OE!</p><button onclick="openGame('evolve','./evolve/index.html')">Play</button></div>
 </div>
 
 <div class="section-title">MODS</div>
 <div class="container">
         <div class="card"><h3>CALM CHUCK OE</h3><p>first public oe mod!</p><button onclick="openGame('chuckoe','./chuckoe/index.html')">Play</button></div>
+    </div>
+</div>
+<div class="section-title" style="color: red">⚠️DANGER ZONE⚠️ <br> these builds have been manually archived through cache, some assets may be missing.</div>
+<div class="container">
+    <div class="card"><h3>BETA OE</h3><p>Beta version of OE!</p><button onclick="openGame('betaoe','./betaoe/index.html')">Play</button></div>
+    <div class="card"><h3>ALPHA OE</h3><p>Alpha version of OE!</p><button onclick="openGame('alphaoe','./alphaoe/index.html')">Play</button></div>
+    <div class="card"><h3>EARLY OE</h3><p>Earlier version of OE!</p><button onclick="openGame('earlyoe','./earlyoe/index.html')">Play</button></div>
+    <div class="card"><h3>v37 OE</h3><p>Last build archived to feature EE styled level picker!</p><button onclick="openGame('v37','./v37/index.html')">Play</button></div>
+    <div class="card"><h3>PVZ2 HEROES</h3><p>Not to be confused with PVZ heroes, but is a crappy game.</p><button onclick="openGame('heroes','./heroes/index.html')">Play</button></div>
+
     </div>
 </div>
 
@@ -312,7 +319,9 @@ const GAME_ZIPS = {
     alphaoe: "./alphaoe.zip",
     earlyoe: "./earlyoe.zip",
     v37: "./v37.zip",
-    chuckoe: "./chuckoe.zip"
+    chuckoe: "./chuckoe.zip",
+    evolve: "./evolve.zip",
+    heroes: "./heroes.zip"
 };
 
 function openGame(key, url) {
